@@ -11,6 +11,7 @@ class CreacionUsuario extends Authenticatable
     use HasApiTokens, HasFactory;
 
     protected $fillable = [
+        'nombre',
         'email',
         'numero_empleado',
         'numero_tienda',
