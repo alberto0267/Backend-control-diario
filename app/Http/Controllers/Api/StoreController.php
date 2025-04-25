@@ -17,9 +17,8 @@ class StoreController extends Controller
         $request->validate(
             [
                 'nombre_tienda' => 'required|string|max:100',
-                'responsable' => 'required|string|',
+                'responsable' => 'required|string',
                 'email' => 'required|string|unique:creacion_tiendas,email',
-
                 'tipo_de_tienda' => 'required|string|max:100',
                 'numero_tienda' => 'required|integer',
                 'password' => 'required|string|min:6',
