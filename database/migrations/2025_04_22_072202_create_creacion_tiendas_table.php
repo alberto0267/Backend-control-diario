@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('creacion_tiendas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_jefe');
-            $table->string('apellido_jefe');
+            $table->string('nombre_tienda');
+            $table->string('responsable');
             $table->string('email')->unique();
             $table->string('tipo_de_tienda');
             $table->string('numero_tienda');

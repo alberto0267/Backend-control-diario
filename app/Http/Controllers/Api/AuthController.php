@@ -12,6 +12,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
+            'nombre' => 'required|string|max:100',
             'email' => 'required|email|unique:creacion_usuarios,email',
             'numero_empleado' => 'required|integer|unique:creacion_usuarios,numero_empleado',
             'numero_tienda' => 'required|integer',
@@ -20,6 +21,7 @@ class AuthController extends Controller
         ]);
 
         $usuario = CreacionUsuario::create([
+            'nombre' => $request->nombre,
             'email' => $request->email,
             'numero_empleado' => $request->numero_empleado,
             'numero_tienda' => $request->numero_tienda,
