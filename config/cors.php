@@ -9,6 +9,7 @@ return [
         'sanctum/csrf-cookie',
         'registro',
         'registroStore',
+        'login',
         'auth/*',
         'storage/*'
     ],

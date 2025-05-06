@@ -20,4 +20,9 @@ class CreacionUsuario extends Authenticatable
         'admin',
         'subadmin',
     ];
+    public function fichajes()
+    {
+        /* Un usuario tiene muchos fichajes */
+        return $this->hasMany(Fichaje::class, 'user_id');
+    }
 }
