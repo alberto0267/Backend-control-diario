@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('fichajes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('creacion_usuarios')->onDelete('cascade');
             $table->string('tipo'); /* Aqui guardaria si es salida o entrada*/
             $table->date('fecha');
-            $table->time('hora_entrada');
-            $table->time('hora_salida');
+            $table->time('hora_entrada')->nullable();
+            $table->time('hora_salida')->nullable();
+            $table->time('hora_descanso')->nullable();
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\StoreController;
+use App\Http\Controllers\Api\FichajeController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\CreacionUsuario;
@@ -63,6 +64,8 @@ En la siguiente ruta no estan protegidas porque aun no se registran
 */
 Route::post('/registro', [AuthController::class, 'register']);
 Route::post('/registroStore', [StoreController::class, 'registerStore']);
+
+Route::post('/fichajes', [FichajeController::class, 'fichaje']);
 
 /* apartir de aqui se protegen  */
 Route::middleware('auth:sanctum')->get('/mi-cuenta', function (Request $request) {

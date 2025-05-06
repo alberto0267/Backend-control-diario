@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CreacionUsuarioSeeder::class,
             CreacionTiendasSeeder::class,
+            CreacionFichajeSeeder::class,
         ]);
     }
 }
