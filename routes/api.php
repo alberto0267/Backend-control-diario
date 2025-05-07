@@ -65,9 +65,16 @@ En la siguiente ruta no estan protegidas porque aun no se registran
 Route::post('/registro', [AuthController::class, 'register']);
 Route::post('/registroStore', [StoreController::class, 'registerStore']);
 
-Route::post('/fichajes', [FichajeController::class, 'fichaje']);
+// Route::post('/fichajes', [FichajeController::class, 'fichaje']);
 
 /* apartir de aqui se protegen  */
-Route::middleware('auth:sanctum')->get('/mi-cuenta', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/mi-cuenta', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/fichajes', [FichajeController::class, 'fichaje']);
+    Route::get('/mi-cuenta', function (Request $request) {
+        return $request->user();
+    });
 });

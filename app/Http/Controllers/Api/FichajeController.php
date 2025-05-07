@@ -11,58 +11,42 @@ class FichajeController extends Controller
 {
     public function fichaje(Request $request)
     {
-
         $request->validate([
-            'numero_empleado' => 'required|string',
+            'user_id' => 'required|integer|exists:creacion_usuarios,id',
             'tipo' => 'required|in:entrada,salida,descanso',
+            'fecha' => 'required|date',
         ]);
 
-
-        $empleado = CreacionUsuario::where('numero_empleado', $request->numero_empleado)->first();
-
-        if (!$empleado) {
-            return response()->json([
-                'mensaje' => 'Empleado no encontrado'
-            ], 404);
-        }
-
-
-        $yaFicho = Fichaje::where('user_id', $empleado->id)
+        $yaFicho = Fichaje::where('user_id', $request->user_id)
             ->where('tipo', $request->tipo)
-            ->whereDate('created_at', now()->toDateString())
+            ->whereDate('fecha', $request->fecha)
             ->exists();
 
         if ($yaFicho) {
             return response()->json([
-                'mensaje' => 'Ya existe un fichaste hoy'
+                'mensaje' => 'Ya existe un fichaje hoy de ese tipo'
             ], 409);
         }
 
-        $hora = now()->toTimeString();
-
-
-        /**  */
-        $datosFichaje = [
-            'user_id' => $empleado->id,
+        $datos = [
+            'user_id' => $request->user_id,
             'tipo' => $request->tipo,
-            'fecha' => now()->toDateString(),
+            'fecha' => $request->fecha,
         ];
 
-
         if ($request->tipo === 'entrada') {
-            $datosFichaje['hora_entrada'] = $hora;
+            $datos['hora_entrada'] = $request->hora_entrada;
         } elseif ($request->tipo === 'salida') {
-            $datosFichaje['hora_salida'] = $hora;
+            $datos['hora_salida'] = $request->hora_salida;
         } else {
-            $datosFichaje['hora_descanso'] = $hora;
+            $datos['hora_descanso'] = $request->hora_descanso;
         }
 
-        // Creamos el fichaje
-        $fichaje = Fichaje::create($datosFichaje);
+        $fichaje = Fichaje::create($datos);
 
         return response()->json([
-            'mensaje' => "Fichaje '{$request->tipo}' registrado correctamente",
+            'mensaje' => 'Fichaje registrado correctamente',
             'fichaje' => $fichaje,
-        ], 201);
+        ], 200);
     }
 }

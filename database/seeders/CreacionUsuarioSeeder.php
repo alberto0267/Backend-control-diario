@@ -14,15 +14,17 @@ class CreacionUsuarioSeeder extends Seeder
     public function run(): void
     {
         //
-        $user = new CreacionUsuario();
-        $user->nombre = "Victor Ramirez";
-        $user->email = "Victor@gmail.com";
-        $user->numero_empleado = "210";
-        $user->numero_tienda = "00001";
-        $user->tipo_de_tienda = 'farmacia';
-        $user->password = bcrypt('2672670');
-        $user->admin = true;
-        $user->subadmin = true;
-        $user->save();
+        if (!CreacionUsuario::where('email', 'Victor@gmail.com')->exists()) {
+            $user = new CreacionUsuario();
+            $user->nombre = "Victor Ramirez";
+            $user->email = "Victor@gmail.com";
+            $user->numero_empleado = "210";
+            $user->numero_tienda = "00001";
+            $user->tipo_de_tienda = 'farmacia';
+            $user->password = bcrypt('2672670');
+            $user->admin = true;
+            $user->subadmin = true;
+            $user->save();
+        }
     }
 }

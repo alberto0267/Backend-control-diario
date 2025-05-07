@@ -16,9 +16,10 @@ class Fichaje extends Model
     protected $fillable = [
         'user_id',
         'tipo',
+        'fecha',
         'hora_entrada',
         'hora_salida',
-        'hora_descaso'
+        'hora_descanso',
     ];
 
     public function usuario()
