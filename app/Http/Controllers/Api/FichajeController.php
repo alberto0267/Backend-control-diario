@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CreacionUsuario;
 use App\Models\Fichaje;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class FichajeController extends Controller
 {
@@ -48,5 +50,24 @@ class FichajeController extends Controller
             'mensaje' => 'Fichaje registrado correctamente',
             'fichaje' => $fichaje,
         ], 200);
+    }
+
+    /* Para el hisrotial*/
+
+    public function descargarPDF()
+    {
+        // Traer todos los usuarios con sus fichajes ya listos
+        $usuarios = \App\Models\CreacionUsuario::with('fichajes')->get();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.fichajes', [
+            'usuarios' => $usuarios
+        ]);
+
+        return response($pdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="fichajes.pdf"')
+            ->header('Access-Control-Allow-Origin', 'http://localhost:5173')
+            ->header('Access-Control-Allow-Methods', 'GET')
+            ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     }
 }

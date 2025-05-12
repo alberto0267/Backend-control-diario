@@ -65,6 +65,13 @@ En la siguiente ruta no estan protegidas porque aun no se registran
 Route::post('/registro', [AuthController::class, 'register']);
 Route::post('/registroStore', [StoreController::class, 'registerStore']);
 
+Route::options('/pdf-fichajes', function (Request $request) {
+    return response('', 200)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+});
+
 // Route::post('/fichajes', [FichajeController::class, 'fichaje']);
 
 /* apartir de aqui se protegen  */
@@ -74,6 +81,7 @@ Route::post('/registroStore', [StoreController::class, 'registerStore']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/fichajes', [FichajeController::class, 'fichaje']);
+    Route::get('/pdf-fichajes', [FichajeController::class, 'descargarPDF']);
     Route::get('/mi-cuenta', function (Request $request) {
         return $request->user();
     });
